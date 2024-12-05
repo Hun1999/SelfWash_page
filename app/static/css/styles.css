@@ -1,0 +1,120 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #333; /* 기본 배경색을 어두운 색으로 설정 */
+}
+
+nav {
+    background: #333;
+    color: #fff;
+    padding: 1em;
+    position: fixed; /* 네비게이션 바를 고정시킴 */
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start; /* 좌측 정렬 */
+}
+
+nav ul li {
+    margin: 0 1em;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.container {
+    padding: 5em 2em 2em 2em; /* 상단 여백을 늘려서 네비게이션 바와 겹치지 않도록 설정 */
+}
+
+.alert {
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+.alert-success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.alert-danger {
+    background-color: #f44336;
+    color: white;
+}
+
+/* 메인 페이지가 아닌 다른 페이지의 배경색을 밝은 색으로 설정 */
+.page-content {
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 20px;
+    min-height: 100vh; /* 페이지 전체 높이를 차지하도록 설정 */
+}
+
+.page-content-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+    color: black;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 페이지 전체 높이를 차지하도록 설정 */
+}
+
+.login-form {
+    width: 100%;
+    max-width: 400px; /* 최대 너비 설정 */
+    padding: 20px;
+    background-color: #fff; /* 배경색 설정 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    border-radius: 10px; /* 모서리 둥글게 */
+}
+
+.login-form .form-control {
+    font-size: 1.2em; /* 폼 필드 글꼴 크기 */
+    padding: 10px; /* 여백 */
+}
+
+.login-form .btn {
+    font-size: 1.2em; /* 버튼 글꼴 크기 */
+    padding: 10px 20px; /* 버튼 여백 */
+    width: 100%; /* 버튼 너비를 100%로 설정 */
+}

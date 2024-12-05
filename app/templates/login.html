@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/loginStyle.css') }}">
+{% endblock %}
+{% block content %}
+<div class="background-container"></div>
+<div class="container">
+    <form action="" method="post">
+        <h2>Login</h2>
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.email.label }}
+            {{ form.email(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.password.label }}
+            {{ form.password(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

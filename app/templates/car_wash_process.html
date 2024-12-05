@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/carWashProcessStyle.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reviewSide.css') }}">
+{% endblock %}
+{% block content %}
+<div class="page-container">
+    <div class="sidebar left">
+        <ul>
+            <li><a href="{{ url_for('main') }}">Home</a></li>
+            <li><a href="{{ url_for('reviews') }}">Review Page</a></li>
+            <li><a href="{{ url_for('car_wash_process') }}">Car Wash Process</a></li>
+            <li><a href="{{ url_for('dilution_ratio_calculator') }}">Dilution Ratio</a></li>
+            <li><a href="{{ url_for('mypage') }}">My Page</a></li>
+        </ul>
+    </div>
+    <div class="content review-container">
+        <h1>Car Wash Process</h1>
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'Beginner')">세린이 프로세스</button>
+            <button class="tab-button" onclick="openTab(event, 'Detailer')">디테일러 프로세스</button>
+        </div>
+        <div id="Beginner" class="tab-content active">
+            <h2>세린이 프로세스</h2>
+            <div class="process-flow">
+                <div class="process-step" data-description="자동차 내부를 깨끗이 청소합니다.">
+                    <div class="step-number">1</div>
+                    <div class="step-content">실내세정</div>
+                </div>
+                <div class="arrow">➔</div>
+                <div class="process-step" data-description="자동차 외부를 물로 헹굽니다.">
+                    <div class="step-number">2</div>
+                    <div class="step-content">프리워시</div>
+                </div>
+                <div class="arrow">➔</div>
+                <div class="process-step" data-description="자동차에 카샴푸를 사용하여 세척합니다.">
+                    <div class="step-number">3</div>
+                    <div class="step-content">카샴푸</div>
+                </div>
+                <div class="arrow">➔</div>
+                <div class="process-step" data-description="자동차를 완전히 건조시킵니다.">
+                    <div class="step-number">4</div>
+                    <div class="step-content">드라잉</div>
+                </div>
+            </div>
+            <div class="description-box row-1" id="descriptionBoxBeginner"></div>
+            {% if beginner_video %}
+            <div class="video-container">
+                <h2>추천 영상</h2>
+                <iframe width="560" height="315" src="{{ beginner_video }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            {% else %}
+            <p>비디오를 로드할 수 없습니다.</p>
+            {% endif %}
+        </div>
+        <div id="Detailer" class="tab-content">
+            <h2>디테일러 프로세스</h2>
+            <div class="process-flow">
+                <div class="process-step" data-description="자동차 내부를 깨끗이 청소합니다.">
+                    <div class="step-number">1</div>
+                    <div class="step-content">실내세정</div>
+                </div>
+                <div class="arrow">➔</div>
+                <div class="process-step" data-description="자동차 외부를 물로 헹굽니다.">
+                    <div class="step-number">2</div>
+                    <div class="step-content">프리워시</div>
+                </div>
+                <div class="arrow">➔</div>
+                <div class="process-step" data-description="바퀴와 타이어를 깨끗이 청소합니다.">
+                    <div class="step-number">3</div>
+                    <div class="step-content">휠&타이어</div>
+                </div>
+            </div>
+            <div class="description-box row-1" id="descriptionBox1Detailer"></div>
+            <div class="process-flow">
+                <div class="process-step" data-description="자동차에 카샴푸를 사용하여 세척합니다.">
+                    <div class="step-number">4</div>
+                    <div class="step-content">카샴푸</div>
+                </div>
+                <div class="arrow">➔</div>
+                <div class="process-step" data-description="자동차를 완전히 건조시킵니다.">
+                    <div class="step-number">5</div>
+                    <div class="step-content">드라잉</div>
+                </div>
+                <div class="arrow">➔</div>
+                <div class="process-step" data-description="자동차에 왁스 또는 퀵디테일러를 적용합니다.">
+                    <div class="step-number">6</div>
+                    <div class="step-content">코팅</div>
+                </div>
+            </div>
+            <div class="description-box row-2" id="descriptionBox2Detailer"></div>
+            {% if detailer_video %}
+            <div class="video-container">
+                <h2>추천 영상</h2>
+                <iframe width="560" height="315" src="{{ detailer_video }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            {% else %}
+            <p>비디오를 로드할 수 없습니다.</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="sidebar right">
+        <div class="ad">
+            <img src="{{ url_for('static', filename='ad_pics/' + ad.image_file) }}" alt="{{ ad.title }}">
+            <h2>{{ ad.title }}</h2>
+            <p>{{ ad.price }}</p>
+        </div>
+    </div>
+</div>
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('Beginner').style.display = 'block';
+
+        const stepsBeginner = document.querySelectorAll('#Beginner .process-step');
+        const descriptionBoxBeginner = document.getElementById('descriptionBoxBeginner');
+
+        stepsBeginner.forEach(step => {
+            step.addEventListener('mouseover', function() {
+                descriptionBoxBeginner.textContent = this.getAttribute('data-description');
+                descriptionBoxBeginner.style.display = 'block';
+            });
+
+            step.addEventListener('mouseout', function() {
+                descriptionBoxBeginner.style.display = 'none';
+            });
+        });
+
+        const stepsDetailer = document.querySelectorAll('#Detailer .process-step');
+        const descriptionBox1Detailer = document.getElementById('descriptionBox1Detailer');
+        const descriptionBox2Detailer = document.getElementById('descriptionBox2Detailer');
+
+        stepsDetailer.forEach(step => {
+            step.addEventListener('mouseover', function() {
+                const stepNumber = parseInt(this.querySelector('.step-number').textContent);
+                const description = this.getAttribute('data-description');
+
+                if (stepNumber <= 3) {
+                    descriptionBox1Detailer.textContent = description;
+                    descriptionBox1Detailer.style.display = 'block';
+                } else {
+                    descriptionBox2Detailer.textContent = description;
+                    descriptionBox2Detailer.style.display = 'block';
+                }
+            });
+
+            step.addEventListener('mouseout', function() {
+                const stepNumber = parseInt(this.querySelector('.step-number').textContent);
+
+                if (stepNumber <= 3) {
+                    descriptionBox1Detailer.style.display = 'none';
+                } else {
+                    descriptionBox2Detailer.style.display = 'none';
+                }
+            });
+        });
+
+        // 초기 활성화된 탭 외에 나머지는 다시 숨깁니다.
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => tab.style.display = tab.id === 'Beginner' ? 'block' : 'none');
+    });
+</script>
+{% endblock %}

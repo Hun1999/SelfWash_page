@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/loginStyle.css') }}">
+{% endblock %}
+{% block content %}
+<div class="background-container"></div>
+<div class="container">
+    <form action="" method="post">
+        <h2>Register</h2>
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.username.label }}<br>
+            {{ form.username(size=32, class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.email.label }}<br>
+            {{ form.email(size=32, class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.password.label }}<br>
+            {{ form.password(size=32, class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.confirm_password.label }}<br>
+            {{ form.confirm_password(size=32, class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

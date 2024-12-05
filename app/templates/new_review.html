@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reviewSide.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/newReviewStyle.css') }}">
+{% endblock %}
+{% block content %}
+<div class="page-container">
+    <div class="sidebar left">
+        <ul>
+            <li><a href="{{ url_for('main') }}">Home</a></li>
+            <li><a href="{{ url_for('reviews') }}">Review Page</a></li>
+            <li><a href="{{ url_for('car_wash_process') }}">Car Wash Process</a></li>
+            <li><a href="{{ url_for('dilution_ratio_calculator') }}">Dilution Ratio</a></li>
+            <li><a href="{{ url_for('mypage') }}">My Page</a></li>
+        </ul>
+    </div>
+    <div class="content review-container">
+        <h2>{{ legend }}</h2>
+        <form action="" method="post" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.title.label }}<br>
+                {{ form.title(size=32, class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.content.label }}<br>
+                {{ form.content(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.image_file.label }}<br>
+                {{ form.image_file(class="form-control-file") }}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+    </div>
+    <div class="sidebar right">
+        <div class="ad">
+            <img src="{{ url_for('static', filename='ad_pics/' + ad.image_file) }}" alt="{{ ad.title }}">
+            <h2>{{ ad.title }}</h2>
+            <p>{{ ad.price }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

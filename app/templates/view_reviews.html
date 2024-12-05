@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reviewStyle.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reviewSide.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="sidebar left">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/reviews">Review Page</a></li>
+            <li><a href="/car_wash_process">Car Wash Process</a></li>
+            <li><a href="/dilution_ratio_calculator">Dilution Ratio</a></li>
+            <li><a href="/mypage">My Page</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <h1>Reviews</h1>
+        <form method="GET" action="{{ url_for('reviews') }}" class="search-form">
+            <input type="text" name="search" placeholder="Search reviews..." value="{{ request.args.get('search', '') }}">
+            <button type="submit">Search</button>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>글 번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성시간</th>
+                    <th>조회수</th>
+                    <th>좋아요 수</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in reviews %}
+                <tr>
+                    <td>{{ review.id }}</td>
+                    <td><a href="/review/{{ review.id }}">{{ review.title }}</a></td>
+                    <td>{{ review.author.username }}</td>
+                    <td>{{ review.date_posted }}</td>
+                    <td>{{ review.view_count }}</td>
+                    <td>{{ review.likes_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagination">
+            {% for p in range(1, total_pages + 1) %}
+                <a href="{{ url_for('reviews', page=p, search=request.args.get('search', '')) }}" class="{{ 'active' if p == pagination.page else '' }}">{{ p }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="sidebar right">
+        <div class="ad">
+            <img src="{{ url_for('static', filename='ad_pics/' + ad.image_file) }}" alt="{{ ad.title }}">
+            <h2>{{ ad.title }}</h2>
+            <p>{{ ad.price }}</p>
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='js/sidebar.js') }}"></script>
+<script src="{{ url_for('static', filename='js/reviewAnimation.js') }}"></script>
+{% endblock %}

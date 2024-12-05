@@ -1,0 +1,83 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(to bottom, #333, #555);
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    animation: slideInForeground 1s forwards;
+}
+
+.background-container {
+    position: absolute;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    background: rgba(200, 200, 200, 0.8);
+    border-radius: 10px;
+    animation: slideInBackground 1s forwards;
+}
+
+.container h2 {
+    margin-bottom: 20px;
+}
+
+.container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.container .form-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.container .form-control {
+    font-size: 1.2em;
+    padding: 10px;
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+}
+
+.container .btn {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+}
+
+@keyframes slideInForeground {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInBackground {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

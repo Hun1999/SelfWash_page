@@ -1,0 +1,109 @@
+.page-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* 패널들이 위로 붙도록 설정 */
+    min-height: 100vh;
+    background-color: #333;
+    padding: 20px;
+}
+
+.sidebar {
+    position: fixed; /* 화면에 고정 */
+    width: 180px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+    border-radius: 10px; /* 모서리를 둥글게 */
+}
+
+.sidebar.left {
+    left: 20px; /* 왼쪽 사이드바 위치 설정, 왼쪽 끝에서 간격 추가 */
+}
+
+.sidebar.right {
+    right: 20px; /* 오른쪽 사이드바 위치 설정, 오른쪽 끝에서 간격 추가 */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    white-space: nowrap;
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #e9ecef;
+    color: #000;
+}
+
+.ad {
+    text-align: center;
+    color: #333;
+}
+
+.ad img {
+    max-width: 100%;
+    height: auto;
+}
+
+.ad h2 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.ad p {
+    font-size: 1em;
+    color: #555;
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.sidebar {
+    opacity: 0;
+}
+
+.sidebar.left {
+    animation: slideInLeft 1s forwards;
+}
+
+.sidebar.right {
+    animation: slideInRight 1s forwards;
+}

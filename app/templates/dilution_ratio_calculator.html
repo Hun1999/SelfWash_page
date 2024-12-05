@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reviewSide.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dilution_ratio_calculator.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="sidebar left">
+        <ul>
+            <li><a href="{{ url_for('main') }}">Home</a></li>
+            <li><a href="{{ url_for('reviews') }}">Review Page</a></li>
+            <li><a href="{{ url_for('car_wash_process') }}">Car Wash Process</a></li>
+            <li><a href="{{ url_for('dilution_ratio_calculator') }}">Dilution Ratio</a></li>
+            <li><a href="{{ url_for('mypage') }}">My Page</a></li>
+        </ul>
+    </div>
+    <div class="content review-container">
+        <h1>Dilution Ratio Calculator</h1>
+        <form id="dilution-form">
+            <div class="form-group">
+                <label for="concentrate">용품:</label>
+                <input type="number" id="concentrate" name="concentrate" placeholder="1" required>
+                <label for="water">물:</label>
+                <input type="number" id="water" name="water" placeholder="100" required>
+            </div>
+            <div class="form-group">
+                <label for="water-amount">물 양 (ml):</label>
+                <input type="number" id="water-amount" name="water-amount" required>
+            </div>
+            <button type="button" onclick="calculateDilution()">계산</button>
+        </form>
+        <h2 id="result"></h2>
+        <button id="copy-button" onclick="copyToClipboard()">복사</button>
+    </div>
+    <div class="sidebar right">
+        <div class="ad">
+            <img src="{{ url_for('static', filename='ad_pics/' + ad.image_file) }}" alt="{{ ad.title }}">
+            <h2>{{ ad.title }}</h2>
+            <p>{{ ad.price }}</p>
+        </div>
+    </div>
+</div>
+<script>
+function calculateDilution() {
+    var concentrate = document.getElementById('concentrate').value;
+    var water = document.getElementById('water').value;
+    var waterAmount = document.getElementById('water-amount').value;
+    var concentrateAmount = (parseInt(waterAmount) / parseInt(water)) * parseInt(concentrate);
+    var resultText = `필요한 용품의 양: ${concentrateAmount} ml`;
+    document.getElementById('result').innerText = resultText;
+    document.getElementById('copy-button').setAttribute('data-clipboard-text', `물 양: ${waterAmount} ml : 용품: ${concentrateAmount} ml`);
+}
+
+function copyToClipboard() {
+    var copyText = document.getElementById('copy-button').getAttribute('data-clipboard-text');
+    navigator.clipboard.writeText(copyText).then(function() {
+        alert('복사되었습니다: ' + copyText);
+    }, function(err) {
+        console.error('복사 실패: ', err);
+    });
+}
+</script>
+{% endblock %}

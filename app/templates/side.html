@@ -1,0 +1,20 @@
+<div class="sidebar left">
+    <ul>
+        <li><a href="{{ url_for('main') }}">Home</a></li>
+        <li><a href="{{ url_for('reviews') }}">Review Page</a></li>
+        <li><a href="{{ url_for('car_wash_process') }}">Car Wash Process</a></li>
+        <li><a href="{{ url_for('dilution_ratio_calculator') }}">Dilution Ratio</a></li>
+        <li><a href="{{ url_for('mypage') }}">My Page</a></li>
+    </ul>
+</div>
+<div class="sidebar right">
+    {% if ad %}
+    <div class="ad">
+        <img src="{{ url_for('static', filename='ad_pics/' + ad.image_file) }}" alt="{{ ad.title }}">
+        <h2>{{ ad.title }}</h2>
+        <p>{{ ad.price }}</p>
+    </div>
+    {% else %}
+    <p>No Ad Available</p>
+    {% endif %}
+</div>

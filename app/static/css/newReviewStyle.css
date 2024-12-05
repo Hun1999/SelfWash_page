@@ -1,0 +1,124 @@
+.page-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    min-height: 100vh;
+    background-color: #333;
+    padding: 20px;
+}
+
+.sidebar {
+    position: fixed;
+    width: 180px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 5;
+    border-radius: 10px;
+}
+
+.sidebar.left {
+    left: 20px;
+}
+
+.sidebar.right {
+    right: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 10px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    white-space: nowrap;
+    display: block;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #e9ecef;
+    color: #000;
+}
+
+.ad {
+    text-align: center;
+    color: #333;
+}
+
+.ad img {
+    max-width: 100%;
+    height: auto;
+}
+
+.ad h2 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.ad p {
+    font-size: 1em;
+    color: #555;
+}
+
+.review-container {
+    max-width: 800px;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    flex-grow: 1;
+    border-radius: 10px;
+}
+
+.review-container h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.review-container .form-group {
+    margin-bottom: 20px;
+}
+
+.review-container .form-control {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-sizing: border-box; /* 패딩을 포함한 너비 계산 */
+}
+
+.review-container .form-control-file {
+    padding: 10px;
+    font-size: 1em;
+}
+
+.review-container .btn {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.review-container .btn:hover {
+    background-color: #555;
+}

@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/mypage.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reviewSide.css') }}">
+{% endblock %}
+{% block content %}
+<div class="page-container">
+    <div class="sidebar left">
+        <ul>
+            <li><a href="{{ url_for('main') }}">Home</a></li>
+            <li><a href="{{ url_for('reviews') }}">Review Page</a></li>
+            <li><a href="{{ url_for('car_wash_process') }}">Car Wash Process</a></li>
+            <li><a href="{{ url_for('dilution_ratio_calculator') }}">Dilution Ratio</a></li>
+            <li><a href="{{ url_for('mypage') }}">My Page</a></li>
+        </ul>
+    </div>
+    <div class="content review-container">
+        <h1>My Page</h1>
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'ViewMaintenance')">주기적인 관리 용품 보기</button>
+            <button class="tab-button" onclick="openTab(event, 'RegisterMaintenance')">등록</button>
+            <button class="tab-button" onclick="openTab(event, 'MyPosts')">내가 쓴 글</button>
+            <button class="tab-button" onclick="openTab(event, 'LikedPosts')">좋아요 한 글</button>
+        </div>
+        <div id="ViewMaintenance" class="tab-content active">
+            <h2>주기적인 관리 용품 보기</h2>
+            <div id="maintenanceList">
+                {% for maintenance in maintenances %}
+                {% set days_left = (maintenance.next_date - kst_now).days %}
+                <div class="maintenance-item" data-id="{{ maintenance.id }}" {% if days_left <= 3 %} style="border-left: 5px solid red;" {% elif days_left <= 7 %} style="border-left: 5px solid yellow;" {% endif %}>
+                    <div class="item">
+                        <h3>{{ maintenance.item }}</h3>
+                    </div>
+                    <div class="item">
+                        <p>마지막 사용: {{ maintenance.date }}<br>권장 사용: {{ maintenance.next_date }}</p>
+                    </div>
+                    <div class="item">
+                        <p>{{ maintenance.note }}</p>
+                    </div>
+                    <div class="item-actions">
+                        <button onclick="editMaintenance({{ maintenance.id }})">수정</button>
+                        <button onclick="deleteMaintenance({{ maintenance.id }})">삭제</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="RegisterMaintenance" class="tab-content">
+            <h2>등록</h2>
+            <form id="maintenanceForm" class="form-container">
+                <input type="hidden" id="maintenance-id">
+                <div class="form-group">
+                    <label for="item">용품:</label>
+                    <input type="text" id="item" name="item" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">날짜:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="frequency">주기 (일):</label>
+                    <input type="number" id="frequency" name="frequency" required>
+                </div>
+                <div class="form-group">
+                    <label for="note">메모:</label>
+                    <textarea id="note" name="note"></textarea>
+                </div>
+                <button type="submit" class="submit-button">등록</button>
+            </form>
+            <div id="nextUsageDate"></div>
+        </div>
+        <div id="MyPosts" class="tab-content">
+            <h2>내가 쓴 글</h2>
+            <ul class="post-list">
+                {% for review in user_reviews %}
+                <li class="post-item"><a href="{{ url_for('review', review_id=review.id) }}">{{ review.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="LikedPosts" class="tab-content">
+            <h2>좋아요 한 글</h2>
+            <ul class="post-list">
+                {% for review in liked_reviews %}
+                <li class="post-item"><a href="{{ url_for('review', review_id=review.id) }}">{{ review.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="sidebar right">
+        <div class="ad">
+            <img src="{{ url_for('static', filename='ad_pics/' + ad.image_file) }}" alt="{{ ad.title }}">
+            <h2>{{ ad.title }}</h2>
+            <p>{{ ad.price }}</p>
+        </div>
+    </div>
+</div>
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    document.getElementById('maintenanceForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const data = {
+            item: formData.get('item'),
+            date: formData.get('date'),
+            frequency: formData.get('frequency'),
+            note: formData.get('note')
+        };
+
+        const maintenanceId = document.getElementById('maintenance-id').value;
+        const url = maintenanceId ? `/maintenance/${maintenanceId}` : '/maintenance';
+        const method = maintenanceId ? 'PUT' : 'POST';
+
+        fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            alert(result.message);
+            location.reload();
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    document.getElementById('date').addEventListener('input', calculateNextUsageDate);
+    document.getElementById('frequency').addEventListener('input', calculateNextUsageDate);
+
+    function calculateNextUsageDate() {
+        const dateInput = document.getElementById('date').value;
+        const frequencyInput = document.getElementById('frequency').value;
+
+        if (dateInput && frequencyInput) {
+            const date = new Date(dateInput);
+            const frequency = parseInt(frequencyInput);
+            date.setDate(date.getDate() + frequency);
+
+            const nextUsageDate = date.toISOString().split('T')[0];
+            document.getElementById('nextUsageDate').textContent = `다음 사용 권장 날짜: ${nextUsageDate}`;
+        } else {
+            document.getElementById('nextUsageDate').textContent = '';
+        }
+    }
+
+    function editMaintenance(id) {
+        fetch(`/maintenance/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('maintenance-id').value = id;
+            document.getElementById('item').value = data.item;
+            document.getElementById('date').value = data.date;
+            document.getElementById('frequency').value = data.frequency;
+            document.getElementById('note').value = data.note;
+
+            openTab(event, 'RegisterMaintenance');
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function deleteMaintenance(id) {
+        fetch(`/maintenance/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(result => {
+            alert(result.message);
+            location.reload();
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+{% endblock %}

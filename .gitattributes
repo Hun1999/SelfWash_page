@@ -1,0 +1,30 @@
+
+# Set default behavior to automatically normalize line endings
+# 모든 텍스트 파일은 LF 사용
+* text=auto eol=lf
+
+# 특정 파일은 CRLF 사용 (예시)
+*.bat eol=crlf
+
+# Custom handling for known file types
+*.js   text
+*.json text
+*.css  text
+*.html text
+*.md   text
+*.sh   text eol=lf
+*.bat  text eol=crlf
+*.yml  text
+*.xml text eol=lf
+*.iml text eol=lf
+
+
+# Prevent certain binary files from being normalized
+*.png  binary
+*.jpg  binary
+*.gif  binary
+*.ico  binary
+*.zip  binary
+*.exe  binary
+*.dll  binary
+*.gitattributes text eol=lf

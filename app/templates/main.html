@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="main-content">
+        <h1>Welcome to Self Wash Page</h1>
+        <div class="panel-container">
+            <div class="panel" onclick="window.location.href='{{ url_for('reviews') }}'">
+                <img src="{{ url_for('static', filename='images/view_reviews.png') }}" alt="View Reviews">
+            </div>
+            <div class="panel" onclick="window.location.href='{{ url_for('car_wash_process') }}'">
+                <img src="{{ url_for('static', filename='images/car_wash_process.png') }}" alt="Car Wash Process">
+            </div>
+            <div class="panel" onclick="window.location.href='{{ url_for('dilution_ratio_calculator') }}'">
+                <img src="{{ url_for('static', filename='images/dilution_ratio_calculator.png') }}" alt="Dilution Ratio Calculator">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mainStyle.css') }}">
+{% endblock %}

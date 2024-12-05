@@ -1,0 +1,121 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #333;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+    margin: 0 auto;
+    width: 90%;
+    min-height: 100vh;
+    background-color: #333;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: fit-content;
+    border-radius: 10px; /* 모서리를 둥글게 */
+}
+
+.sidebar.left {
+    margin-right: 20px; /* 사이드 패널과 중앙 패널 사이의 간격 설정 */
+}
+
+.sidebar.right {
+    margin-left: 20px; /* 사이드 패널과 중앙 패널 사이의 간격 설정 */
+}
+
+.content {
+    max-width: 800px;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    flex-grow: 1;
+    border-radius: 10px; /* 모서리를 둥글게 */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table thead th {
+    background-color: #eee;
+    padding: 10px;
+    text-align: left;
+}
+
+.table tbody tr {
+    background-color: #fff;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.table tbody tr td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pagination {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #eee;
+    color: #333;
+    text-decoration: none;
+}
+
+.pagination a.active {
+    background-color: #333;
+    color: #fff;
+}
+
+.search-form {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-form input[type="text"] {
+    padding: 10px;
+    width: 60%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.search-form button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.search-form button:hover {
+    background-color: #555;
+}
